@@ -1,0 +1,156 @@
+http://127.0.0.1:5000/submit_teachers
+
+{
+  "teachers": [
+    {
+      "teacher_id": "CJ",
+      "teacher_name": "Dr. Calistus Jude AL",
+      "subjects": ["MATH", "VB", "VB-P"],
+      "preferred_sections": ["III A", "III B"]
+    },
+    {
+      "teacher_id": "JJ",
+      "teacher_name": "Mr. Jeo Joy A",
+      "subjects": ["MATH", "VB", "VB-P"],
+      "preferred_sections": ["III C", "III D"]
+    },
+    {
+      "teacher_id": "SP",
+      "teacher_name": "Prof. Sevuga Pandian",
+      "subjects": ["MATH", "VB", "VB-P"],
+      "preferred_sections": ["III E", "III F"]
+    },
+    {
+      "teacher_id": "KK",
+      "teacher_name": "Dr. Kalaiselvi K",
+      "subjects": ["DS"],
+      "preferred_sections": ["III A", "III B", "III E"]
+    },
+    {
+      "teacher_id": "ASH",
+      "teacher_name": "Mr. R. Aswin Herbert Sathish",
+      "subjects": ["DS"],
+      "preferred_sections": ["III C", "III D", "III F"]
+    },
+    {
+      "teacher_id": "GP",
+      "teacher_name": "Dr. G. Prathap",
+      "subjects": ["VB", "VB-P"],
+      "preferred_sections": ["III A", "III B", "III E"]
+    },
+    {
+      "teacher_id": "MJ",
+      "teacher_name": "Dr. Mary Jacob",
+      "subjects": ["VB", "VB-P"],
+      "preferred_sections": ["III C", "III D", "III F"]
+    },
+    {
+      "teacher_id": "RG",
+      "teacher_name": "Mr. Ramanathan G",
+      "subjects": ["JP", "J-P"],
+      "preferred_sections": ["II A", "II B", "II C", "II D"]
+    },
+    {
+      "teacher_id": "GS",
+      "teacher_name": "Dr. Gopika S",
+      "subjects": ["JP", "J-P"],
+      "preferred_sections": ["II E", "II F", "II G"]
+    },
+    {
+      "teacher_id": "DM",
+      "teacher_name": "Dr. Dhanamalar M",
+      "subjects": ["JP", "J-P"],
+      "preferred_sections": ["II A", "II B", "II C", "II D"]
+    },
+    {
+      "teacher_id": "VSP",
+      "teacher_name": "Dr. V. S. Prakash",
+      "subjects": ["JP", "J-P"],
+      "preferred_sections": ["II E", "II F", "II G"]
+    },
+    {
+      "teacher_id": "MMT",
+      "teacher_name": "Dr. Margaret Mary T",
+      "subjects": ["STAT"],
+      "preferred_sections": ["II A", "II B", "II C", "II D", "II E", "II F", "II G"]
+    },
+    {
+      "teacher_id": "DKS",
+      "teacher_name": "Dr. Divya K. S",
+      "subjects": ["OS", "PYR"],
+      "preferred_sections": ["II A", "II B", "II C", "II D", "II E", "II F", "II G"]
+    },
+    {
+      "teacher_id": "NK",
+      "teacher_name": "Dr. N. Karthikeyan",
+      "subjects": ["ENG"],
+      "preferred_sections": ["II A", "II B", "II C", "II D", "II E", "II F", "II G"]
+    },
+    {
+      "teacher_id": "SR",
+      "teacher_name": "Ms. Sherin Rappai",
+      "subjects": ["PC", "P-P-C"],
+      "preferred_sections": ["I A", "I B", "I C"]
+    },
+    {
+      "teacher_id": "SA",
+      "teacher_name": "Ms. Sumalatha A",
+      "subjects": ["PC", "P-P-C"],
+      "preferred_sections": ["I D", "I E", "I F"]
+    },
+    {
+      "teacher_id": "DG",
+      "teacher_name": "Dr. D. Gopinath",
+      "subjects": ["PC", "P-P-C"],
+      "preferred_sections": ["I G", "I H"]
+    },
+    {
+      "teacher_id": "HP",
+      "teacher_name": "Dr. Haripriya M P",
+      "subjects": ["PCCF"],
+      "preferred_sections": ["I A", "I B", "I C", "I D"]
+    },
+    {
+      "teacher_id": "VPM",
+      "teacher_name": "Ms. Vishnu Priya P M",
+      "subjects": ["PCCF"],
+      "preferred_sections": ["I E", "I F", "I G", "I H"]
+    },
+    {
+      "teacher_id": "SA",
+      "teacher_name": "Dr. Stephen A",
+      "subjects": ["ENG"],
+      "preferred_sections": ["I A", "I B", "I C", "I D"]
+    },
+    {
+      "teacher_id": "AK",
+      "teacher_name": "Dr. A. Kanagaraj",
+      "subjects": ["ENG"],
+      "preferred_sections": ["I E", "I F", "I G", "I H"]
+    },
+    {
+      "teacher_id": "RV",
+      "teacher_name": "Dr. Revathy V R",
+      "subjects": ["ELE"],
+      "preferred_sections": ["I A", "I B", "I C", "I D", "I E", "I F", "I G", "I H"]
+    },
+    {
+      "teacher_id": "YM",
+      "teacher_name": "Dr. Yashoda M B",
+      "subjects": ["STAN", "IOTI"],
+      "preferred_sections": ["I A", "I B", "I C", "I D", "I E", "I F", "I G", "I H"]
+    },
+    {
+      "teacher_id": "MS",
+      "teacher_name": "Dr. M. Sudharsan",
+      "subjects": ["PC", "P-P-C"],
+      "preferred_sections": ["I A", "I B", "I C", "I D"]
+    },
+    {
+      "teacher_id": "SS",
+      "teacher_name": "Ms. Simmi S",
+      "subjects": ["PC", "P-P-C"],
+      "preferred_sections": ["I E", "I F", "I G", "I H"]
+    }
+  ]
+}

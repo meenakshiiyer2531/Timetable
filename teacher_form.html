@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Teacher Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .teacher-form {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #e9ecef;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .dropdown button {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: white;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 100%;
+            z-index: 1;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .dropdown-content label {
+            display: block;
+            padding: 5px;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        .selected-items div {
+            margin: 5px;
+            padding: 5px;
+            background-color: #d9f7be;
+            border-radius: 3px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script>
+        function toggleDropdown(id) {
+            document.getElementById(id).classList.toggle("show");
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown button')) {
+                let dropdowns = document.getElementsByClassName("dropdown-content");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    let openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        };
+
+        function handleCheckboxChange(event, selectedItemsId) {
+            const text = event.target.value;
+            const selectedItems = document.querySelector(`#${selectedItemsId}`);
+            const existingItem = selectedItems.querySelector(`[data-value="${text}"]`);
+
+            if (event.target.checked) {
+                if (!existingItem) {
+                    const selectedItem = document.createElement('div');
+                    selectedItem.setAttribute('data-value', text);
+                    selectedItem.innerText = text;
+                    selectedItems.appendChild(selectedItem);
+                }
+            } else {
+                if (existingItem) {
+                    existingItem.remove();
+                }
+            }
+        }
+
+        function submitTeacherData() {
+            const teacherData = [];
+            const teacherForms = document.querySelectorAll('.teacher-form');
+
+            teacherForms.forEach(form => {
+                const teacherId = form.querySelector('.teacher-id').value;
+                const teacherName = form.querySelector('.teacher-name').value;
+                const subjects = Array.from(form.querySelectorAll('.subjects input[type="checkbox"]:checked')).map(input => input.value);
+                const sections = Array.from(form.querySelectorAll('.sections input[type="checkbox"]:checked')).map(input => input.value);
+
+                teacherData.push({
+                    teacher_id: teacherId,
+                    teacher_name: teacherName,
+                    subjects: subjects,
+                    preferred_sections: sections
+                });
+            });
+
+            // Send POST request to Flask API
+            fetch('http://127.0.0.1:5000/submit_teachers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ teachers: teacherData })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert('Teacher data submitted successfully!');
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Error submitting teacher data!');
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Teacher Data Submission</h1>
+        <form id="teacherForm" onsubmit="event.preventDefault(); submitTeacherData();">
+            <!-- Generate 25 Teacher Forms -->
+            <div id="teacherForms">
+                <!-- Teacher Form Template will be inserted here -->
+            </div>
+            <button type="submit">Submit Teacher Data</button>
+        </form>
+    </div>
+
+    <script>
+        // Generate 25 teacher forms
+        const teacherFormsContainer = document.getElementById('teacherForms');
+        for (let i = 1; i <= 25; i++) {
+            const teacherFormHTML = `
+                <div class="teacher-form">
+                    <h3>Teacher ${i}</h3>
+                    <div class="form-group">
+                        <label for="teacher_id_${i}">Teacher ID:</label>
+                        <input type="text" class="teacher-id" id="teacher_id_${i}" name="teacher_id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="teacher_name_${i}">Teacher Name:</label>
+                        <input type="text" class="teacher-name" id="teacher_name_${i}" name="teacher_name" required>
+                    </div>
+                    <div class="form-group dropdown">
+                        <label for="subjects_${i}">Subjects:</label>
+                        <button type="button" onclick="toggleDropdown('subjects_dropdown_${i}')">Select Subjects</button>
+                        <div id="subjects_dropdown_${i}" class="dropdown-content">
+                            <label><input type="checkbox" value="MATH" onchange="handleCheckboxChange(event, 'subjects_selected_${i}')"> MATH</label>
+<label><input type="checkbox" value="VB" onchange="handleCheckboxChange(event, 'subjects_selected_${i}')"> VB</label>
+<label><input type="checkbox" value="VB-P" onchange="handleCheckboxChange(event, 'subjects_selected_${i}')"> VB-P</label>
+
+<label><input type="checkbox" value="DS" onchange="handleCheckboxChange(event, 'subjects_selected_${i}')"> DS</label>
+
+<label><input type="checkbox" value="JP" onchange="handleCheckboxChange(event, 'subjects_selected_${i}')"> JP</label>
+<label><input type="checkbox" value="J-P" onchange="handleCheckboxChange(event, 'subjects_selected_${i}')"> J-P</label>
+
+<label><input type="checkbox" value="STAT" onchange="handleCheckboxChange(event, 'subjects_selected_${i}')"> STAT</label>
+
+<label><input type="checkbox" value="OS" onchange="handleCheckboxChange(event, 'subjects_selected_${i}')"> OS</label>
+<label><input type="checkbox" value="PYR" onchange="handleCheckboxChange(event, 'subjects_selected_${i}')"> PYR</label>
+
+<label><input type="checkbox" value="ENG" onchange="handleCheckboxChange(event, 'subjects_selected_${i}')"> ENG</label>
+
+<label><input type="checkbox" value="PC" onchange="handleCheckboxChange(event, 'subjects_selected_${i}')"> PC</label>
+<label><input type="checkbox" value="P-P-C" onchange="handleCheckboxChange(event, 'subjects_selected_${i}')"> P-P-C</label>
+
+<label><input type="checkbox" value="PCCF" onchange="handleCheckboxChange(event, 'subjects_selected_${i}')"> PCCF</label>
+
+<label><input type="checkbox" value="ELE" onchange="handleCheckboxChange(event, 'subjects_selected_${i}')"> ELE</label>
+
+<label><input type="checkbox" value="STAN" onchange="handleCheckboxChange(event, 'subjects_selected_${i}')"> STAN</label>
+<label><input type="checkbox" value="IOTI" onchange="handleCheckboxChange(event, 'subjects_selected_${i}')"> IOTI</label>
+
+                        </div>
+                        <div id="subjects_selected_${i}" class="selected-items"></div>
+                    </div>
+                    <div class="form-group dropdown">
+                        <label for="sections_${i}">Preferred Sections:</label>
+                        <button type="button" onclick="toggleDropdown('sections_dropdown_${i}')">Select Sections</button>
+                        <div id="sections_dropdown_${i}" class="dropdown-content">
+                            <label><input type="checkbox" value="I A" onchange="handleCheckboxChange(event, 'sections_selected_${i}')"> I A</label>
+<label><input type="checkbox" value="I B" onchange="handleCheckboxChange(event, 'sections_selected_${i}')"> I B</label>
+<label><input type="checkbox" value="I C" onchange="handleCheckboxChange(event, 'sections_selected_${i}')"> I C</label>
+<label><input type="checkbox" value="I D" onchange="handleCheckboxChange(event, 'sections_selected_${i}')"> I D</label>
+<label><input type="checkbox" value="I E" onchange="handleCheckboxChange(event, 'sections_selected_${i}')"> I E</label>
+<label><input type="checkbox" value="I F" onchange="handleCheckboxChange(event, 'sections_selected_${i}')"> I F</label>
+<label><input type="checkbox" value="I G" onchange="handleCheckboxChange(event, 'sections_selected_${i}')"> I G</label>
+<label><input type="checkbox" value="I H" onchange="handleCheckboxChange(event, 'sections_selected_${i}')"> I H</label>
+
+<label><input type="checkbox" value="II A" onchange="handleCheckboxChange(event, 'sections_selected_${i}')"> II A</label>
+<label><input type="checkbox" value="II B" onchange="handleCheckboxChange(event, 'sections_selected_${i}')"> II B</label>
+<label><input type="checkbox" value="II C" onchange="handleCheckboxChange(event, 'sections_selected_${i}')"> II C</label>
+<label><input type="checkbox" value="II D" onchange="handleCheckboxChange(event, 'sections_selected_${i}')"> II D</label>
+<label><input type="checkbox" value="II E" onchange="handleCheckboxChange(event, 'sections_selected_${i}')"> II E</label>
+<label><input type="checkbox" value="II F" onchange="handleCheckboxChange(event, 'sections_selected_${i}')"> II F</label>
+<label><input type="checkbox" value="II G" onchange="handleCheckboxChange(event, 'sections_selected_${i}')"> II G</label>
+
+<label><input type="checkbox" value="III A" onchange="handleCheckboxChange(event, 'sections_selected_${i}')"> III A</label>
+<label><input type="checkbox" value="III B" onchange="handleCheckboxChange(event, 'sections_selected_${i}')"> III B</label>
+<label><input type="checkbox" value="III C" onchange="handleCheckboxChange(event, 'sections_selected_${i}')"> III C</label>
+<label><input type="checkbox" value="III D" onchange="handleCheckboxChange(event, 'sections_selected_${i}')"> III D</label>
+<label><input type="checkbox" value="III E" onchange="handleCheckboxChange(event, 'sections_selected_${i}')"> III E</label>
+<label><input type="checkbox" value="III F" onchange="handleCheckboxChange(event, 'sections_selected_${i}')"> III F</label>
+
+                        </div>
+                        <div id="sections_selected_${i}" class="selected-items"></div>
+                    </div>
+                </div>
+            `;
+            teacherFormsContainer.innerHTML += teacherFormHTML;
+        }
+    </script>
+</body>
+</html>
+
+
+
